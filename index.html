@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lima Cromática – expedición de colores ocultos</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Barlow+Condensed:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --negro: #000000;
+    --blanco: #FFFFFF;
+    --rojo: #E8000F;
+    --azul: #0033CC;
+    --amarillo: #FFE600;
+    --verde: #1B4D2E;
+    --naranja: #FF6600;
+    --magenta: #FF007F;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--blanco);
+    color: var(--negro);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 56px;
+  }
+
+  .nav-logo {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #444;
+    text-decoration: none;
+    letter-spacing: 0;
+  }
+
+  .nav-logo span { color: #444; }
+
+  .nav-links {
+    display: flex;
+    gap: 0;
+    list-style: none;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0 1rem;
+    height: 56px;
+    line-height: 56px;
+    color: #444;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    text-transform: none;
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover { color: var(--magenta); background: none; }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #444;
+  }
+
+  /* HERO */
+  #hero {
+    margin-top: 56px;
+    width: 100%;
+    overflow: hidden;
+    background: var(--blanco);
+  }
+
+  .hero-banner {
+    width: 100%;
+    display: block;
+    height: auto;
+  }
+
+  .hero-cta-bar {
+    background: var(--blanco);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .hero-cta-bar p {
+    font-size: 0.85rem;
+    color: #555;
+    font-weight: 400;
+    max-width: 680px;
+    line-height: 1.5;
+  }
+
+  .hero-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 0.9;
+    color: var(--blanco);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title .cromatica { color: var(--amarillo); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    font-style: italic;
+    margin-bottom: 2.5rem;
+    line-height: 1.4;
+  }
+
+  .hero-credits {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.6;
+    max-width: 320px;
+  }
+
+  .hero-cta {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--amarillo);
+    color: var(--negro);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    transition: background 0.15s, transform 0.15s;
+  }
+
+  .btn-primary:hover {
+    background: var(--rojo);
+    color: var(--blanco);
+    transform: translateY(-2px);
+  }
+
+  /* SECTION BASE */
+  section { padding: 6rem 2rem; }
+
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: -0.01em;
+    color: #333;
+    margin-bottom: 2rem;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  /* PROYECTO */
+  #proyecto { background: var(--blanco); }
+
+  .proyecto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .proyecto-text p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 1.2rem;
+  }
+
+  .proyecto-visual {
+    position: relative;
+  }
+
+  .color-bar {
+    display: flex;
+    height: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .color-bar div { flex: 1; }
+  .cb1 { background: var(--amarillo); }
+  .cb2 { background: var(--verde); }
+  .cb3 { background: var(--azul); }
+  .cb4 { background: var(--naranja); }
+  .cb5 { background: var(--rojo); }
+  .cb6 { background: var(--magenta); }
+
+  .proyecto-quote {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    line-height: 1.2;
+    color: var(--negro);
+    border-left: 6px solid var(--rojo);
+    padding-left: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .logos-inst {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .logo-pill {
+    background: var(--negro);
+    color: var(--blanco);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+  }
+
+  /* ESTACIONES */
+  #estaciones { background: #f7f7f7; color: var(--negro); }
+
+  #estaciones .section-label { color: var(--rojo); }
+  #estaciones .section-title { color: var(--negro); }
+
+  .map-wrapper {
+    width: 100%;
+    height: 500px;
+    border: 3px solid var(--amarillo);
+    overflow: hidden;
+    margin-bottom: 3rem;
+  }
+
+  .map-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .estaciones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2px;
+    background: #ddd;
+  }
+
+  .estacion-card {
+    background: var(--blanco);
+    padding: 1.5rem;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .estacion-card:hover { background: #f0f0f0; }
+
+  .estacion-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 3rem;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .e1 .estacion-num { color: #E8000F; }  /* rojo */
+  .e2 .estacion-num { color: #1B9C3E; }  /* verde */
+  .e3 .estacion-num { color: #F4B400; }  /* amarillo */
+  .e4 .estacion-num { color: #7B2D8B; }  /* morado */
+  .e5 .estacion-num { color: #1A237E; }  /* azul oscuro */
+  .e6 .estacion-num { color: #F4B400; }  /* amarillo */
+  .e7 .estacion-num { color: #1A237E; }  /* azul oscuro */
+  .e8 .estacion-num { color: #1B9C3E; }  /* verde */
+  .e9 .estacion-num { color: #E8000F; }  /* rojo */
+
+  .estacion-nombre {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    color: var(--negro);
+  }
+
+  .estacion-desc {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  /* FECHAS */
+  #fechas { background: var(--magenta); color: var(--blanco); }
+
+  #fechas .section-label { color: rgba(255,255,255,0.7); }
+  #fechas .section-title { color: var(--blanco); }
+
+  .fechas-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .fecha-item {
+    border-top: 1px solid rgba(255,255,255,0.35);
+    padding: 1rem 0;
+  }
+
+  .fecha-dia {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--blanco);
+  }
+
+  .fecha-info {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.75);
+    margin-top: 0.2rem;
+  }
+
+  .inscripcion-box {
+    background: var(--negro);
+    padding: 2.5rem;
+    border-radius: 2px;
+  }
+
+  .inscripcion-box h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: var(--blanco);
+    text-transform: none;
+    margin-bottom: 0.8rem;
+  }
+
+  .inscripcion-box p {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .kit-info {
+    background: rgba(255,255,255,0.08);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.5;
+    border-left: 3px solid var(--magenta);
+  }
+
+  .btn-inscribe {
+    display: inline-block;
+    background: var(--blanco);
+    color: var(--magenta);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    text-decoration: none;
+    padding: 1rem 2rem;
+    transition: background 0.15s, transform 0.15s;
+  }
+
+  .btn-inscribe:hover {
+    background: var(--negro);
+    color: var(--blanco);
+    transform: translateY(-2px);
+  }
+
+  /* GALERÍA */
+  #galeria { background: var(--blanco); }
+
+  .galeria-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .btn-sube {
+    display: inline-block;
+    background: var(--negro);
+    color: var(--blanco);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.9rem 1.8rem;
+    transition: background 0.15s;
+  }
+
+  .btn-sube:hover { background: var(--azul); }
+
+  .galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 4px;
+  }
+
+  .galeria-item {
+    aspect-ratio: 1;
+    overflow: hidden;
+    position: relative;
+    background: #eee;
+  }
+
+  .galeria-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+  }
+
+  .galeria-item:hover .galeria-placeholder { transform: scale(1.05); }
+
+  .gp1 { background: #FFE600; }
+  .gp2 { background: #E8000F; color: rgba(255,255,255,0.4); }
+  .gp3 { background: #0033CC; color: rgba(255,255,255,0.4); }
+  .gp4 { background: #FF6600; }
+  .gp5 { background: #FF007F; color: rgba(255,255,255,0.4); }
+  .gp6 { background: #1B4D2E; color: rgba(255,255,255,0.4); }
+  .gp7 { background: #f0f0f0; }
+  .gp8 { background: #FFE600; }
+
+  .qr-box {
+    margin-top: 3rem;
+    background: var(--negro);
+    padding: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .qr-placeholder {
+    width: 100px;
+    height: 100px;
+    background: var(--blanco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    color: var(--negro);
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .qr-text h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--blanco);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .qr-text p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+  }
+
+  /* EQUIPO */
+  #equipo { background: #f5f5f5; }
+
+  .equipo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .equipo-card {
+    background: var(--blanco);
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+
+  .equipo-card:hover { transform: translateY(-4px); }
+
+  .equipo-foto {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    color: var(--blanco);
+  }
+
+  .ef1 { background: var(--rojo); }
+  .ef2 { background: var(--azul); }
+  .ef3 { background: var(--verde); }
+
+  .equipo-nombre {
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .equipo-rol {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--rojo);
+    margin-bottom: 0.8rem;
+  }
+
+  .equipo-bio {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* CONTACTO */
+  #contacto { background: #f7f7f7; color: var(--negro); }
+
+  #contacto .section-label { color: var(--rojo); }
+  #contacto .section-title { color: var(--negro); }
+
+  .contacto-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .contacto-form input,
+  .contacto-form textarea {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    padding: 1rem 0;
+    color: var(--negro);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .contacto-form input::placeholder,
+  .contacto-form textarea::placeholder { color: rgba(0,0,0,0.3); }
+
+  .contacto-form input:focus,
+  .contacto-form textarea:focus { border-color: var(--rojo); }
+
+  .contacto-form textarea { height: 120px; resize: none; }
+
+  .btn-enviar {
+    background: var(--negro);
+    color: var(--blanco);
+    border: none;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 1rem 2.5rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-enviar:hover { background: var(--rojo); }
+
+  .contacto-info h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: var(--negro);
+    margin-bottom: 1.5rem;
+  }
+
+  .contacto-info p {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+  }
+
+  .contacto-info a {
+    color: var(--rojo);
+    text-decoration: none;
+  }
+
+  .redes {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-instagram {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--negro);
+    text-decoration: none;
+    border-bottom: 3px solid var(--magenta);
+    padding-bottom: 4px;
+    transition: color 0.15s;
+  }
+
+  .btn-instagram:hover { color: var(--magenta); }
+
+  /* FOOTER */
+  footer {
+    background: var(--negro);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .footer-copy {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .hero-banner { max-height: 50vw; }
+    .hero-left { padding: 3rem 1.5rem; }
+
+    .proyecto-grid,
+    .fechas-layout,
+    .contacto-layout { grid-template-columns: 1fr; gap: 2rem; }
+
+    section { padding: 4rem 1.5rem; }
+
+    .galeria-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">Lima <span>Cromática</span></a>
+  <ul class="nav-links">
+    <li><a href="#proyecto">Proyecto</a></li>
+    <li><a href="#estaciones">Estaciones</a></li>
+    <li><a href="#fechas">Fechas</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <img class="hero-banner" src="LimaCromatica_web_v1.png" alt="Lima Cromática – expedición de colores ocultos">
+  <div class="hero-cta-bar">
+    <p>Proyecto desarrollado por Camila Bustamante, coproducido con el Centro Cultural de España en Lima, dentro de la convocatoria de proyectos artísticos para espacios públicos en Lima 2026.</p>
+    <a href="#fechas" class="btn-primary">Inscríbete →</a>
+  </div>
+</section>
+
+<!-- PROYECTO -->
+<section id="proyecto">
+  <div class="container">
+    <div class="proyecto-grid">
+      <div class="proyecto-text">
+        <p class="section-label" style="color:var(--rojo)">— El proyecto</p>
+        <h2 class="section-title">Lima Cromática:<br>expedición de colores ocultos</h2>
+        <p>Una propuesta de la diseñadora y comunicadora Camila Bustamante que invita a redescubrir el Centro Histórico de Lima a través del color.</p>
+        <p>El proyecto plantea una experiencia sensorial que transforma la manera de observar la ciudad mediante filtros cromáticos. A través de caminatas guiadas y recorridos autoguiados con kits portátiles, los participantes exploran una ruta de nueve estaciones clave del centro limeño.</p>
+        <p>Cada kit incluye visores de madera prensada con filtros de acrílico —ámbar, magenta, azul y amarillo— y un mapa ilustrado que orienta el recorrido. Los visores no solo cambian el color de lo que se ve: abren una pregunta sobre el tiempo. ¿De qué color fue esto? ¿De qué color podría ser? El color como archivo vivo.</p>
+        <p>El proyecto cuestiona la idea de Lima como una "ciudad gris", poniendo en valor la riqueza cromática de su patrimonio arquitectónico. Más allá de la experiencia inmediata, los kits funcionan también como objetos coleccionables, extendiendo el vínculo del público con la iniciativa.</p>
+        <div class="logos-inst">
+          <span class="logo-pill">CCE Lima</span>
+          <span class="logo-pill">AECID</span>
+        </div>
+      </div>
+      <div class="proyecto-visual">
+        <div class="color-bar">
+          <div class="cb1"></div><div class="cb2"></div><div class="cb3"></div>
+          <div class="cb4"></div><div class="cb5"></div><div class="cb6"></div>
+        </div>
+        <div style="aspect-ratio:3/4; overflow:hidden;">
+          <img src="foto_proyecto.png" alt="Visor cromático sobre fachada del Centro Histórico de Lima" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <blockquote class="proyecto-quote">"El color como archivo vivo: ¿de qué color fue esto? ¿de qué color podría ser?"</blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESTACIONES -->
+<section id="estaciones">
+  <div class="container">
+    <p class="section-label">— El recorrido</p>
+    <h2 class="section-title">9 Estaciones<br>en el Centro Histórico</h2>
+    <div class="map-wrapper">
+      <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1w2LlnFwJ0aWVMt8-OQi6Rr3tImHNfEM&ehbc=2E312F" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+    <div class="estaciones-grid">
+      <div class="estacion-card e1">
+        <div class="estacion-num">01</div>
+        <div class="estacion-nombre">Plaza San Martín</div>
+        <div class="estacion-desc">Inicio del recorrido cromático. Punto de encuentro y primera lectura del color urbano.</div>
+      </div>
+      <div class="estacion-card e2">
+        <div class="estacion-num">02</div>
+        <div class="estacion-nombre">Casa Du Bois</div>
+        <div class="estacion-desc">Jirón de la Unión. Arquitectura republicana y sus capas de color ocultas.</div>
+      </div>
+      <div class="estacion-card e3">
+        <div class="estacion-num">03</div>
+        <div class="estacion-nombre">Palais Concert</div>
+        <div class="estacion-desc">Jirón de la Unión. Fachada histórica con estratos cromáticos superpuestos.</div>
+      </div>
+      <div class="estacion-card e4">
+        <div class="estacion-num">04</div>
+        <div class="estacion-nombre">Iglesia de La Merced</div>
+        <div class="estacion-desc">Jirón de la Unión. Piedra y color: la policromía invisible del barroco limeño.</div>
+      </div>
+      <div class="estacion-card e5">
+        <div class="estacion-num">05</div>
+        <div class="estacion-nombre">Casa O'Higgins</div>
+        <div class="estacion-desc">Jirón de la Unión. Historia y pigmento en una de las casonas más significativas del jirón.</div>
+      </div>
+      <div class="estacion-card e6">
+        <div class="estacion-num">06</div>
+        <div class="estacion-nombre">Casa Courret</div>
+        <div class="estacion-desc">Jirón de la Unión cdra. 8. Sede del legendario estudio fotográfico y sus tonos escondidos.</div>
+      </div>
+      <div class="estacion-card e7">
+        <div class="estacion-num">07</div>
+        <div class="estacion-nombre">Plaza Mayor</div>
+        <div class="estacion-desc">El corazón del centro histórico visto a través del filtro cromático.</div>
+      </div>
+      <div class="estacion-card e8">
+        <div class="estacion-num">08</div>
+        <div class="estacion-nombre">Pasaje Santa Rosa</div>
+        <div class="estacion-desc">Un pasaje íntimo con una paleta de colores que el tiempo ha ido acumulando.</div>
+      </div>
+      <div class="estacion-card e9">
+        <div class="estacion-num">09</div>
+        <div class="estacion-nombre">Alameda Chabuca Granda</div>
+        <div class="estacion-desc">Cierre del recorrido. El río, la ciudad y el color como territorio compartido.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FECHAS -->
+<section id="fechas">
+  <div class="container">
+    <div class="fechas-layout">
+      <div>
+        <p class="section-label">— Cuándo</p>
+        <h2 class="section-title">7 Recorridos<br>junio – agosto 2026</h2>
+        <div class="fecha-item">
+          <div class="fecha-dia">Dom 14 Jun</div>
+          <div class="fecha-info">Recorrido 1 · 10am – 12pm</div>
+        </div>
+        <div class="fecha-item">
+          <div class="fecha-dia">Sáb 20 Jun</div>
+          <div class="fecha-info">Recorrido 2 · 10am – 12pm</div>
+        </div>
+        <div class="fecha-item">
+          <div class="fecha-dia">Dom 28 Jun</div>
+          <div class="fecha-info">Recorrido 3 · 10am – 12pm</div>
+        </div>
+        <div class="fecha-item">
+          <div class="fecha-dia">Sáb 4 Jul</div>
+          <div class="fecha-info">Recorrido 4 · 10am – 12pm</div>
+        </div>
+        <div class="fecha-item">
+          <div class="fecha-dia">Dom 12 Jul</div>
+          <div class="fecha-info">Recorrido 5 · 10am – 12pm</div>
+        </div>
+        <div class="fecha-item">
+          <div class="fecha-dia">Sáb 18 Jul</div>
+          <div class="fecha-info">Recorrido 6 · 10am – 12pm</div>
+        </div>
+        <div class="fecha-item">
+          <div class="fecha-dia">Dom 8 Ago</div>
+          <div class="fecha-info">Recorrido 7 · 10am – 12pm</div>
+        </div>
+      </div>
+      <div class="inscripcion-box">
+        <h3>¿Quieres participar?</h3>
+        <p>Los recorridos son guiados, libres y gratuitos. Salida desde Plaza San Martín todos los domingos y sábados indicados, a las 10am.</p>
+        <div class="kit-info">
+          Cada participante recibe gratis su <strong>kit cromático</strong>: visor de madera prensada con filtros de acrílico (ámbar, magenta, azul y amarillo) + mapa ilustrado del recorrido.
+        </div>
+        <a href="https://forms.google.com" target="_blank" class="btn-inscribe">Inscríbete aquí →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section id="galeria">
+  <div class="container">
+    <div class="galeria-header">
+      <div>
+        <p class="section-label" style="color:var(--rojo)">— Galería colectiva</p>
+        <h2 class="section-title">Sé parte de la galería<br>colectiva de Lima Cromática</h2>
+        <p style="font-size:1rem; color:#555; max-width:600px; line-height:1.7; margin-top:0.8rem;">Cada foto que compartes suma a un archivo visual colectivo de la ciudad. Sube tu imagen, ponle nombre al color que encontraste y forma parte de esta expedición compartida.</p>
+      </div>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdjGqFlKUx6HrqyvmfBsknTfTIFwlHxZ8Bbf-5MTKHUD18BFA/viewform" target="_blank" class="btn-sube">+ Sube tu foto</a>
+    </div>
+    <div class="galeria-grid">
+      <div class="galeria-item"><img src="galeria_1.png" alt="Lima Cromática - columnas en magenta" style="width:100%;height:100%;object-fit:cover;"></div>
+      <div class="galeria-item"><img src="galeria_2.png" alt="Lima Cromática - torre en azul" style="width:100%;height:100%;object-fit:cover;"></div>
+      <div class="galeria-item"><img src="galeria_3.png" alt="Lima Cromática - Palais Concert en rojo" style="width:100%;height:100%;object-fit:cover;"></div>
+      <div class="galeria-item"><img src="galeria_4.png" alt="Lima Cromática - torre en verde" style="width:100%;height:100%;object-fit:cover;"></div>
+    </div>
+    <div class="qr-box">
+      <img src="qr_galeria.png" alt="QR Galería Lima Cromática" style="width:110px; height:110px; flex-shrink:0; background:white; padding:6px;">
+      <div class="qr-text">
+        <h4>Escanea y comparte tu foto</h4>
+        <p>¿Visitaste Lima Cromática? Escanea este QR, sube tu foto y ponle nombre al color que encontraste. Cada mirada suma a este archivo visual colectivo de la ciudad.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdjGqFlKUx6HrqyvmfBsknTfTIFwlHxZ8Bbf-5MTKHUD18BFA/viewform" target="_blank" style="color:var(--amarillo); font-size:0.8rem; font-weight:600;">→ Abrir formulario</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPO -->
+<section id="equipo">
+  <div class="container">
+    <p class="section-label" style="color:var(--rojo)">— Quiénes somos</p>
+    <h2 class="section-title">Equipo</h2>
+    <div class="equipo-grid">
+      <div class="equipo-card">
+        <div class="equipo-foto ef1">CB</div>
+        <div class="equipo-nombre">Camila Bustamante</div>
+        <div class="equipo-rol">Dirección y diseño</div>
+        <div class="equipo-bio">Diseñadora gráfica y comunicadora peruana con más de 20 años de experiencia. Autora de <em>Detox Visual</em> (2025) y coautora de <em>Dolor/Color</em> (2026). Máster del Sandberg Instituut Amsterdam. Su práctica explora el bienestar desde lo visual y la capacidad de propiciar nuevas maneras de mirar el entorno.</div>
+      </div>
+      <div class="equipo-card">
+        <div class="equipo-foto ef2">H</div>
+        <div class="equipo-nombre">Habitante</div>
+        <div class="equipo-rol">Colaboración creativa</div>
+        <div class="equipo-bio">Estudio-taller de arquitectura de Denisse Fernandez García y B.J. Marroquín Huaman. Desde hace 9 años utilizan herramientas de arquitectura, artes y pedagogía — con el juego como elemento transversal — para crear espacios, talleres y artefactos en contextos comunitarios, culturales y pedagógicos.</div>
+      </div>
+      <div class="equipo-card">
+        <div class="equipo-foto ef3">EG</div>
+        <div class="equipo-nombre">Elisa Granda</div>
+        <div class="equipo-rol">Acompañamiento pedagógico y guiones</div>
+        <div class="equipo-bio">Educadora de museos, licenciada en Educación Primaria por la PUCP y diplomada en Enseñanza de las Ciencias Sociales por FLACSO Argentina. Más de 10 años en espacios culturales, incluyendo el MINCUL. Ilustradora autodidacta y actualmente cursando la maestría en Historia del Arte y Curaduría en la PUCP.</div>
+      </div>
+      <div class="equipo-card">
+        <div class="equipo-foto" style="background:var(--naranja)">UV</div>
+        <div class="equipo-nombre">Úrsula Villalobos</div>
+        <div class="equipo-rol">Acompañamiento arquitectónico</div>
+        <div class="equipo-bio">Arquitecta de la Universidad Ricardo Palma con 20 años de experiencia en diseño creativo y sostenible. Integra funcionalidad, sensibilidad estética y conciencia ambiental. Desarrolla iniciativas que fomentan la interacción con niños y la reutilización de recursos.</div>
+      </div>
+      <div class="equipo-card">
+        <div class="equipo-foto" style="background:var(--azul)">PS</div>
+        <div class="equipo-nombre">Pablo Solórzano Torres</div>
+        <div class="equipo-rol">Guía y patrimonio histórico</div>
+        <div class="equipo-bio">Guía oficial de turismo, escritor y docente especializado en la historia y el arte de Lima. Máster en Patrimonio Histórico y Territorial por la Universidad de Cantabria. Autor de <em>Lima Dark</em> (2025) y <em>Tras los pasos de Mario Vargas Llosa</em> (2026). Conduce walking tours por el Centro Histórico a través de Arte Lima.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <p class="section-label" style="color:var(--rojo)">— Síguenos</p>
+    <h2 class="section-title">Contacto</h2>
+    <div style="max-width:480px;">
+      <p style="font-size:1rem; color:#555; line-height:1.7; margin-bottom:2rem;">Para consultas, colaboraciones o seguir el proceso del proyecto, encuéntranos en Instagram.</p>
+      <a href="https://instagram.com/ciudadcromatica" target="_blank" class="btn-instagram">
+        → @ciudadcromatica
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Lima Cromática · 2026</div>
+  <div class="footer-copy">Desarrollado por Camila Bustamante · CCE Lima · AECID</div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    if (links.style.display === 'flex') {
+      links.style.display = 'none';
+    } else {
+      links.style.display = 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '56px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = '#000';
+      links.style.padding = '1rem 0';
+    }
+  }
+
+  function enviarFormulario(e) {
+    e.preventDefault();
+    alert('¡Gracias por tu mensaje! Te responderemos pronto.');
+    e.target.reset();
+  }
+
+  // Highlight nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--magenta)' : '';
+    });
+  });
+</script>
+</body>
+</html>
